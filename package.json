@@ -1,0 +1,20 @@
+{
+  "name": "human-digital-twin-workspace",
+  "version": "1.0.0",
+  "description": "AI-Powered Human Digital Twin - Multi-dimensional personal intelligence and replica platform",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install && npm install --prefix server && npm install --prefix client",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "npm run dev --prefix server",
+    "dev:client": "npm run dev --prefix client",
+    "build": "npm run build --prefix server && npm run build --prefix client",
+    "test": "npm run test --prefix server && npm run test --prefix client",
+    "lint": "npm run lint --prefix server && npm run lint --prefix client"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "author": "Human Digital Twin Engineering Team",
+  "license": "ISC"
+}

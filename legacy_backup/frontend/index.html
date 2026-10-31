@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Character encoding -->
+    <meta charset="UTF-8">
+
+    <!-- Responsive design -->
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <!-- Page title -->
+    <title>Human Digital Twin</title>
+
+    <!-- Connect CSS -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+
+    <!-- ================================================= -->
+    <!-- DASHBOARD PAGE -->
+    <!-- ================================================= -->
+
+    <div id="dashboardPage">
+
+
+        <!-- Header -->
+
+        <header>
+
+            <h1>Human Digital Twin</h1>
+
+            <p>
+                Your Personal Digital Dashboard
+            </p>
+
+        </header>
+
+
+        <!-- Main dashboard -->
+
+        <main class="container">
+
+
+            <!-- User welcome section -->
+
+            <div class="welcome-card">
+
+                <h2>Welcome!</h2>
+
+                <p id="dashboardUser">
+    Welcome to your Digital Twin.
+</p>
+
+            </div>
+
+
+            <h2 class="section-title">
+                Your Digital Twin
+            </h2>
+
+
+            <!-- Dashboard cards -->
+
+            <div class="dashboard-grid">
+
+
+                <!-- Personal -->
+
+                <div class="dashboard-card"
+                     onclick="openSection('personal')">
+
+                    <div class="card-icon">
+                        👤
+                    </div>
+
+                    <h3>Personal Details</h3>
+
+                    <p>
+                        Basic information about you
+                    </p>
+
+                    <button>
+                        View / Edit
+                    </button>
+
+                </div>
+
+
+                <!-- Physical Health -->
+
+                <div class="dashboard-card"
+                     onclick="openSection('physical')">
+
+                    <div class="card-icon">
+                        ❤️
+                    </div>
+
+                    <h3>Physical Health</h3>
+
+                    <p>
+                        Heart rate, BMI and health data
+                    </p>
+
+                    <button>
+                        View / Edit
+                    </button>
+
+                </div>
+
+
+                <!-- Fitness -->
+
+                <div class="dashboard-card"
+                     onclick="openSection('fitness')">
+
+                    <div class="card-icon">
+                        🏃
+                    </div>
+
+                    <h3>Fitness</h3>
+
+                    <p>
+                        Steps, activity and lifestyle
+                    </p>
+
+                    <button>
+                        View / Edit
+                    </button>
+
+                </div>
+
+
+                <!-- Mental Health -->
+
+                <div class="dashboard-card"
+                     onclick="openSection('mental')">
+
+                    <div class="card-icon">
+                        🧠
+                    </div>
+
+                    <h3>Mental Health</h3>
+
+                    <p>
+                        Stress, anxiety and mindfulness
+                    </p>
+
+                    <button>
+                        View / Edit
+                    </button>
+
+                </div>
+
+
+                <!-- Emotional Health -->
+
+                <div class="dashboard-card"
+                     onclick="openSection('emotional')">
+
+                    <div class="card-icon">
+                        😊
+                    </div>
+
+                    <h3>Emotional Health</h3>
+
+                    <p>
+                        Happiness, confidence and motivation
+                    </p>
+
+                    <button>
+                        View / Edit
+                    </button>
+
+                </div>
+
+
+                <!-- Personality -->
+
+                <div class="dashboard-card"
+                     onclick="openSection('personality')">
+
+                    <div class="card-icon">
+                        🧩
+                    </div>
+
+                    <h3>Personality</h3>
+
+                    <p>
+                        Personality and personal abilities
+                    </p>
+
+                    <button>
+                        View / Edit
+                    </button>
+
+                </div>
+
+
+                    <div class="card-icon">
+
+                <!-- Education -->
+
+
+                <!-- Financial -->
+
+                <div class="dashboard-card"
+                     onclick="openSection('financial')">
+
+                    <div class="card-icon">
+                        💰
+                    </div>
+
+                    <h3>Financial</h3>
+
+                    <p>
+                        Income, expenses and savings
+                    </p>
+
+                    <button>
+                        View / Edit
+                    </button>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+
+    <!-- ================================================= -->
+    <!-- DETAIL PAGE -->
+    <!-- ================================================= -->
+
+    <div id="detailPage" class="hidden">
+
+
+        <!-- Detail header -->
+
+        <header>
+
+            <button class="back-button"
+                    onclick="showDashboard()">
+
+                ← Back to Dashboard
+
+            </button>
+
+            <h1 id="detailTitle">
+                Details
+            </h1>
+
+        </header>
+
+
+        <!-- Detail content -->
+
+        <main class="container">
+
+            <div class="form-card">
+
+                <!-- The correct form will be inserted
+                     here using JavaScript -->
+
+                <div id="detailContent"></div>
+
+
+                <!-- Save button -->
+
+                <button class="save-button"
+                        onclick="saveSection()">
+
+                    Save Details
+
+                </button>
+
+
+                <!-- Message -->
+
+                <p id="saveMessage"></p>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <!-- JavaScript -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

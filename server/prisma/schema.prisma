@@ -1,0 +1,319 @@
+// Prisma Schema for Human Digital Twin
+// Configured with SQLite for instantaneous zero-setup execution,
+// fully compatible with PostgreSQL when deployed to cloud/production.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relationships
+  profile          Profile?
+  healthRecords    HealthRecord[]
+  fitnessRecords   FitnessRecord[]
+  nutritionRecords NutritionRecord[]
+  mentalRecords    MentalHealthRecord[]
+  emotionalRecords EmotionalRecord[]
+  personalityRecords PersonalityRecord[]
+  socialRecords    SocialRecord[]
+  educationRecords EducationRecord[]
+  careerRecords    CareerRecord[]
+  financialRecords FinancialRecord[]
+  sleepRecords     SleepRecord[]
+  habits           Habit[]
+  habitLogs        HabitLog[]
+  goals            Goal[]
+  aiReports        AIReport[]
+}
+
+model Profile {
+  id               String   @id @default(uuid())
+  userId           String   @unique
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  age              Int?
+  gender           String?
+  height           Float?   // in cm
+  weight           Float?   // in kg
+  bloodGroup       String?
+  dob              DateTime?
+  occupation       String?
+  education        String?
+  emergencyContact String?
+  bio              String?
+  avatarUrl        String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model HealthRecord {
+  id                 String   @id @default(uuid())
+  userId             String
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recordedAt         DateTime @default(now())
+  heartRate          Int?     // BPM
+  restingHeartRate   Int?     // BPM
+  bloodPressureSys   Int?     // mmHg systolic
+  bloodPressureDia   Int?     // mmHg diastolic
+  oxygenLevel        Float?   // % (SpO2)
+  bloodSugar         Float?   // mg/dL fasting
+  cholesterol        Float?   // mg/dL total
+  bmi                Float?   // kg/m^2 calculated
+  muscleMass         Float?   // % or kg
+  boneDensity        Float?   // T-score
+  skinHealth         Int?     // 1-100 self/device metric
+  healthScore        Float?   // 0-100 dimension score
+  notes              String?
+
+  @@index([userId, recordedAt])
+}
+
+model FitnessRecord {
+  id              String   @id @default(uuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recordedAt      DateTime @default(now())
+  steps           Int?     // count
+  walkingDistance Float?   // km
+  activeCalories  Float?   // kcal
+  inactiveTime    Float?   // hours
+  waterIntake     Float?   // litres
+  fitnessScore    Float?   // 0-100 dimension score
+  notes           String?
+
+  @@index([userId, recordedAt])
+}
+
+model NutritionRecord {
+  id                 String   @id @default(uuid())
+  userId             String
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recordedAt         DateTime @default(now())
+  mealType           String?  // Breakfast, Lunch, Dinner, Snack
+  mealDescription    String?
+  calories           Float?   // kcal
+  protein            Float?   // g
+  carbs              Float?   // g
+  fat                Float?   // g
+  dietaryScore       Float?   // 0-100 nutrition score
+  notes              String?
+
+  @@index([userId, recordedAt])
+}
+
+model MentalHealthRecord {
+  id                       String   @id @default(uuid())
+  userId                   String
+  user                     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recordedAt               DateTime @default(now())
+  stressLevel              Int?     // 0-100 %
+  anxietyLevel             Int?     // 0-100 % self-report
+  burnoutLevel             Int?     // 0-100 % self-report
+  depressionScreeningScore Int?     // PHQ-9 style self-assessment 0-27 or %
+  relaxationLevel          Int?     // 0-100 %
+  mindfulnessLevel         Int?     // 0-100 %
+  mentalScore              Float?   // 0-100 calculated
+  notes                    String?
+
+  @@index([userId, recordedAt])
+}
+
+model EmotionalRecord {
+  id           String   @id @default(uuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recordedAt   DateTime @default(now())
+  happiness    Int?     // 0-100 %
+  sadness      Int?     // 0-100 %
+  anger        Int?     // 0-100 %
+  fear         Int?     // 0-100 %
+  confidence   Int?     // 0-100 %
+  motivation   Int?     // 0-100 %
+  excitement   Int?     // 0-100 %
+  dominantMood String?  // e.g. "Joyful", "Calm", "Reflective", "Anxious"
+  emotionalScore Float? // 0-100 dimension score
+  notes        String?
+
+  @@index([userId, recordedAt])
+}
+
+model PersonalityRecord {
+  id                String   @id @default(uuid())
+  userId            String
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recordedAt        DateTime @default(now())
+  personalityType   String?  // Introvert, Extrovert, Ambivert
+  openness          Int?     // 0-100 %
+  emotionalStability Int?    // 0-100 %
+  communication     Int?     // 0-100 %
+  leadership        Int?     // 0-100 %
+  teamwork          Int?     // 0-100 %
+  adaptability      Int?     // 0-100 %
+  personalityScore  Float?   // 0-100 dimension score
+  notes             String?
+
+  @@index([userId, recordedAt])
+}
+
+model SocialRecord {
+  id               String   @id @default(uuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recordedAt       DateTime @default(now())
+  familyBond       Int?     // 0-100 %
+  friendshipScore  Int?     // 0-100 %
+  socialEngagement Int?     // 0-100 %
+  interactionsCount Int?    // conversations/meetings today
+  socialScore      Float?   // 0-100 dimension score
+  notes            String?
+
+  @@index([userId, recordedAt])
+}
+
+model EducationRecord {
+  id               String   @id @default(uuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recordedAt       DateTime @default(now())
+  learningProgress Int?     // 0-100 %
+  skillDevelopment Int?     // 0-100 %
+  studyTimeHours   Float?   // hours
+  technicalSkills  String?  // comma-separated or json string
+  softSkills       String?
+  codingSkills     String?
+  learningScore    Float?   // 0-100 dimension score
+  notes            String?
+
+  @@index([userId, recordedAt])
+}
+
+model CareerRecord {
+  id                   String   @id @default(uuid())
+  userId               String
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recordedAt           DateTime @default(now())
+  resumeStrengths      String?
+  projectExperience    String?
+  certificationsCount  Int?     @default(0)
+  targetRole           String?
+  industry             String?
+  careerReadinessScore Float?   // 0-100 dimension score
+  notes                String?
+
+  @@index([userId, recordedAt])
+}
+
+model FinancialRecord {
+  id              String   @id @default(uuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recordedAt      DateTime @default(now())
+  monthlyIncome   Float?
+  monthlyExpenses Float?
+  monthlySavings  Float?
+  monthlyBudget   Float?
+  investments     String?  // description / portfolio notes
+  financialScore  Float?   // 0-100 dimension score
+  notes           String?
+
+  @@index([userId, recordedAt])
+}
+
+model SleepRecord {
+  id                 String   @id @default(uuid())
+  userId             String
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recordedAt         DateTime @default(now())
+  sleepDurationHours Float?   // hours
+  bedtime            String?  // "23:00"
+  wakeTime           String?  // "07:00"
+  sleepQuality       Int?     // 0-100 %
+  deepSleepPercent   Int?     // %
+  remSleepPercent    Int?     // %
+  sleepScore         Float?   // 0-100 dimension score
+  notes              String?
+
+  @@index([userId, recordedAt])
+}
+
+model Habit {
+  id              String     @id @default(uuid())
+  userId          String
+  user            User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name            String
+  category        String     // Health, Productivity, Mindfulness, Fitness, etc.
+  targetFrequency String     // daily, weekdays, weekends
+  targetTime      String?    // "Morning", "Evening", "Anytime"
+  active          Boolean    @default(true)
+  currentStreak   Int        @default(0)
+  longestStreak   Int        @default(0)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  logs            HabitLog[]
+
+  @@index([userId])
+}
+
+model HabitLog {
+  id           String   @id @default(uuid())
+  habitId      String
+  habit        Habit    @relation(fields: [habitId], references: [id], onDelete: Cascade)
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date         String   // "YYYY-MM-DD" for strict day lookup
+  completed    Boolean  @default(true)
+  streakAtLog  Int      @default(1)
+  notes        String?
+  createdAt    DateTime @default(now())
+
+  @@unique([habitId, date])
+  @@index([userId, date])
+}
+
+model Goal {
+  id           String    @id @default(uuid())
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category     String    // Health, Fitness, Financial, Career, Habits, etc.
+  title        String
+  description  String?
+  targetValue  Float
+  currentValue Float     @default(0)
+  unit         String
+  deadline     DateTime?
+  status       String    @default("IN_PROGRESS") // IN_PROGRESS, COMPLETED, ABANDONED
+  priority     String    @default("MEDIUM")      // LOW, MEDIUM, HIGH
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([userId, status])
+}
+
+model AIReport {
+  id              String   @id @default(uuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reportType      String   // "WEEKLY_SUMMARY", "MONTHLY_SUMMARY", "HOLISTIC_TWIN", "PREDICTIVE_INSIGHT"
+  title           String
+  summary         String
+  observations    String   // JSON string of findings
+  recommendations String   // JSON string of actionable steps
+  predictions     String?  // JSON string of predictive projections
+  compositeScore  Float?   // Overall twin score at time of generation
+  source          String   @default("LOCAL_HEURISTIC") // "OPENAI_GPT" or "LOCAL_HEURISTIC"
+  generatedAt     DateTime @default(now())
+
+  @@index([userId, reportType])
+}
