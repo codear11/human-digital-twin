@@ -41,6 +41,6 @@ Thumbs.db
 *.swp
 *.swo
 
-# Coverage / Test
-coverage/
-.nyc_output/
+# Legacy archive
+HUMANdigitaltwin/
+
